@@ -140,6 +140,7 @@ def _new_message(data, value, numerology_func=number_to_numerology):
     data = ""
     if numerology_emojis:
         data += numerology_emojis + " "
+        data += "[" + numerology_title + "] "
     if podcast:
         data += podcast + " "
     if episode:
