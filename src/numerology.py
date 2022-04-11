@@ -1,102 +1,98 @@
 import math
 import re
 
-PI = str(math.pi).replace(".", "")
-PI_REGEX_PATTERN = "|".join(PI[:x] for x in range(len(PI) + 1, 3 - 1, -1))
+def number_to_numerology(number: int) -> [str, str]:
+    lookup = {
+        10: ["🎳", "Bowler Donation"],
+        1010: ["🎳🎳", "2x Bowler Donation"],
+    	101010: ["🎳🎳🎳🦃🔥🔥🔥", "3x Bowler Donation - Turkey!"],
+    	10101010: ["🎳🎳🎳🎳🦃🦃🔥🔥🔥", "4x Bowler Donation - 2x Turkey!"],
+    	1010101010: ["🎳🎳🎳🎳🎳🦃🦃🦃🔥🔥🔥", "5x Bowler Donation - 3x Turkey!"],
 
-COUNTDOWN = "987654321"
-COUNTDOWN_REGEX_PATTEN = "|".join(
-    COUNTDOWN[-n:] for n in range(len(COUNTDOWN), 3 - 1, -1)
-)
+        6006: ["🎱🎱", "Skinny Boobs Donation"],
+        6008: ["🎱🎱", "Right-Heavy Boobs Donation"],
+        8006: ["🎱🎱", "Left-Heavy Boobs Donation"],
+        8008: ["🎱🎱", "Boobs Donation"],
 
-REGEX_PATTEN = "|".join(
-    (
-        COUNTDOWN_REGEX_PATTEN,
-        r"(?:10)+|11|21|33|69|73|88|420|666|1776|1867|9653|[68]00[68]|^2+$",
-        PI_REGEX_PATTERN,
-    )
-)
+        2: ["🦆💩", ""],
+        22: ["🦆🦆", "Ducks In-A-Row Donation"],
+        222: ["🦆🦆🦆", "3x Ducks In-A-Row Donation"],
+        2222: ["🦆🦆🦆🦆", "4x Ducks In-A-Row Donation"],
+        22222: ["🦆🦆🦆🦆🦆🔥", "5x Ducks In-A-Row Donation"],
+        222222: ["🦆🦆🦆🦆🦆🦆🔥🔥🔥", "6x Ducks In-A-Row Donation"],
+        2222222: ["🦆🦆🦆🦆🦆🦆🦆🔥🔥🔥", "7x Ducks In-A-Row Donation"],
 
-REGEX = re.compile(REGEX_PATTEN)
+        11: ["🎲", "Dice Donation"],
+        1111: ["🎲🎲", "Dice Donation"],
+        111111: ["🎲🎲🎲🔥🔥🔥", "Dice Donation"],
 
+        21: ["🪙", "Bitcoin Donation"],
+        2121: ["🪙🪙", "Bitcoin Donation"],
+        212121: ["🪙🪙🪙🔥🔥🔥", "Bitcoin Donation"],
 
-def number_to_numerology(number: int) -> str:
-    results = []
+        33: ["✨", "Magic Number Donation"],
+        333: ["✨", "Magic Number Donation"],
+        3333: ["✨✨", "Magic Number Donation"],
+        33333: ["✨✨🔥", "Magic Number Donation"],
+        69: ["💋", "Swasslenuff Donation"],
+        6969: ["💋💋", "Swasslenuff Donation"],
+        696969: ["💋💋💋🔥🔥🔥", "Swasslenuff Donation"],
 
-    number_str = str(number)
+        73: ["👋", "Greetings Donation"],
+        7373: ["👋👋", "Greetings Donation"],
+        737373: ["👋👋👋🔥🔥🔥", "Greetings Donation"],
 
-    matches = REGEX.findall(number_str)
+        88: ["🥰", "Love and Kisses Donation"],
+        8888: ["🥰🥰", "Love and Kisses Donation"],
+        888888: ["🥰🥰🥰🔥🔥🔥", "Love and Kisses Donation"],
 
-    for match in matches:
+        420: ["✌👽💨", "Stoner Donation"],
+        420420: ["✌👽💨✌👽💨🔥🔥🔥", "Stoner Donation"],
 
-        if re.search(r"(?:10)+", match):
-            for _ in range(len(match) // 2):
-                results.append("🎳")
-            for _ in range(len(match) // 2 - 3 + 1):
-                results.append("🦃")
+        666: ["😈", "Devil Donation"],
+        666666: ["😈😈🔥🔥🔥", "Devil Donation"],
 
-        if match == "11":
-            results.append("🎲")
+        1776: ["🇺🇸", "America Fuck Yeah Donation"],
 
-        if match == "21":
-            results.append("🪙")
+        1867: ["🇨🇦", "Canada Skookum as Frig Donation"],
 
-        if match == "33":
-            results.append("✨")
+        9653: ["🐺", "Wolf Donation"],
 
-        if match == "69":
-            results.append("💋")
+        314: ["🥧", "Pi Donation"],
+        3141: ["🥧🥧", "2x Pi Donation"],
+        31415: ["🥧🥧🥧🔥", "3x Pi Donation"],
+        314159: ["🥧🥧🥧🥧🔥🔥🔥", "4x Pi Donation"],
+        3141592: ["🥧🥧🥧🥧🥧🔥🔥🔥", "5x Pi Donation"],
+        314314: ["🥧🥧🔥🔥🔥", "Triple-Lit 2x Pi Donation"],
+        1314: ["🥧", "Pi Donation"],
+        3142: ["🥧", "Pi Donation"],
 
-        if match == "73":
-            results.append("👋")
+        321: ["💥", "Countdown Donation"],
+        4321: ["💥💥", "2x Countdown Donation"],
+        54321: ["💥💥💥🔥🔥", "3x Countdown Donation"],
+        654321: ["💥💥💥💥🔥🔥🔥", "4x Countdown Donation"],
+        7654321: ["💥💥💥💥💥🔥🔥🔥", "5x Countdown Donation"],
+        87654321: ["💥💥💥💥💥💥🔥🔥🔥", "6x Countdown Donation"],
+        987654321: ["💥💥💥💥💥💥💥🔥🔥🔥", "7x Countdown Donation"],
 
-        if match == "88":
-            results.append("🥰")
+        2169: ["🪙💋", "Bitcoin Swasslenuff Donation"],
+        6921: ["💋🪙", "Swasslenuff Bitcoin Donation"],
+        3369: ["✨💋", "Magic Kiss Donation"],
+        6933: ["💋✨", "Kiss Magic Donation"],
+        1021: ["🎳🪙", "Bowling Bitcoin Donation"],
+        1011: ["🎳🎲", "Lucky Strike Donation"],
+        2110: ["🪙🎳", "Bitcoin Bowling Donation"],
+        1069: ["🎳💋", "Blessed Balls Donation"],
+        6910: ["💋🎳", "Extra-Blessed Balls Donation"],
+        7388: ["👋🥰", "Blowing Kisses Donation"],
+        8873: ["🥰👋", "Blowing Kisses Donation"],
+        31433: ["🥧✨🔥", "Lit Magic Pi Donation"],
+        69314: ["💋🥧🔥🔥", "Cherry Pi Lipstick Donation"],
+        10321: ["🎳💥🔥", "Strike Donation"],
+        32121: ["💥🪙🔥", "Buy the Dip Donation"]
+    }
 
-        if match == "420":
-            results.append("✌👽💨")
-
-        if match == "666":
-            results.append("😈")
-
-        if match == "1776":
-            results.append("🇺🇸")
-
-        if match == "1867":
-            results.append("🇨🇦")
-
-        if match == "9653":
-            results.append("🐺")
-
-        if re.search(r"[68]00[68]", match):
-            results.append("🎱")
-            results.append("🎱")
-
-        if re.search(r"^2+$", match):
-            for _ in range(len(match)):
-                results.append("🦆")
-
-        if re.search(PI_REGEX_PATTERN, match):
-            for _ in range(len(match) - 2):
-                results.append("🥧")
-
-        if re.search(COUNTDOWN_REGEX_PATTEN, match):
-            for _ in range(len(match) - 2):
-                results.append("💥")
-
-    if number >= 100000:
-        results.append("🔥")
-
-    if number >= 50000:
-        results.append("🔥")
-
-    if number >= 10000:
-        results.append("🔥")
-
-    if number < 10:
-        results.append("💩")
-
-    if not results:
-        return ""
-
-    return "".join(results)
+    try:
+        return lookup[number]
+    except KeyError:
+        return ["", ""]

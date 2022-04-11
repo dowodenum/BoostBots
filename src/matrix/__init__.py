@@ -134,12 +134,12 @@ def _new_message(data, value, numerology_func=number_to_numerology):
     app = _get(data, "app_name", "via {app_name}")
     timestamp = _get(data, "ts", lambda _, v: "@{}".format(timedelta(seconds=int(v))))
 
-    numerology = numerology_func(value)
-
+    numerology_emojis, numerology_title = numerology_func(value)
+    
     # Build the data to send to Matrix
     data = ""
-    if numerology:
-        data += numerology + " "
+    if numerology_emojis:
+        data += numerology_emojis + " "
     if podcast:
         data += podcast + " "
     if episode:

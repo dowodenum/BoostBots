@@ -117,7 +117,7 @@ def cli(
 
                     # arbitrarily slice to chunks of 250 in an attempt
                     # to accomodate long bot nicks/hostmasks, or channels
-                    message = chunks(fullmessage, 250)
+                    message = _chunks(fullmessage, 250)
 
                     for chunk in message:
                         for channel in irc_channel:
@@ -168,12 +168,13 @@ def _new_message(data, value, numerology_func=number_to_numerology):
     episode = _sanitize(_get(data, "episode", "\x02[{episode}]\x02"))
     message = _sanitize(_get(data, "message", 'saying "\x02{message}\x02"'))
     timestamp = _get(data, "ts", lambda _, v: "@{}".format(timedelta(seconds=int(v))))
-    numerology = numerology_func(value)
-
-    # Build the data to send to Matrix
+    numerology_emojis, numerology_title = numerology_func(value)
+    
+    # Build the data to send to IRC
     data = ""
-    if numerology:
-        data += numerology + " "
+    if numerology_emojis:
+        data += numerology_emojis + " "
+        data += "[" + numerology_title + "] "
     if podcast:
         data += podcast + " "
     if episode:
